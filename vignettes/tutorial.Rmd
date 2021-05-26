@@ -1,0 +1,21 @@
+
+---
+title: "Project 3: myfirstpackage Tutorial"
+author: "Jack L Griffin"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{myfirstpackage Tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(myfirstpackage)
+```
