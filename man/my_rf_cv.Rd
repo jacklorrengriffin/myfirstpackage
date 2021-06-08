@@ -17,7 +17,6 @@ Predicting a variable using covariates with random forest cross validation
 }
 \examples{
 my_rf_cv(5)
-my_rf_cv(1)
 
 }
 \keyword{prediction}

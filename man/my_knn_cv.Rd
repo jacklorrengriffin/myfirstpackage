@@ -7,13 +7,13 @@
 my_knn_cv(train, cl, k_nn, k_cv)
 }
 \arguments{
-\item{train:}{input data frame}
+\item{train}{input data frame}
 
-\item{cl:}{true class value of your training data}
+\item{cl}{true class value of your training data}
 
-\item{k_nn:}{integer representing the number of neighbors}
+\item{k_nn}{integer representing the number of neighbors}
 
-\item{k_cv:}{integer representing the number of folds}
+\item{k_cv}{integer representing the number of folds}
 }
 \value{
 list containing a vector of the predicted class for all observations,
@@ -24,8 +24,8 @@ Predicts output class species using covariates bill_length_mm, bill_depth_mm,
 flipper_length_mm, and body_mass_g.
 }
 \examples{
-my_knn_cvv(mypenguins, mypenguins$species)
-my_knn_cvv(data, daya$x)
+my_penguins <- na.omit(my_penguins)
+my_knn_cv(my_penguins[,3:6], my_penguins$species, 1, 2)
 
 }
 \keyword{prediction}

@@ -11,8 +11,8 @@
 #' parameter alternative, and the p-value
 #'
 #' @examples
-#' my_t.test(x, less, 5)
-#' my_t.test(y, two.sided, 6)
+#' x <- 1:10
+#' my_t.test(x, "less", 5)
 #'
 #' @export
 my_t.test <- function(x, alternative, mu) {

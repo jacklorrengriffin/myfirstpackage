@@ -21,8 +21,8 @@ parameter alternative, and the p-value
 This function performs a one sample t-test in R.
 }
 \examples{
-my_t.test(x, less, 5)
-my_t.test(y, two.sided, 6)
+x <- 1:10
+my_t.test(x, "less", 5)
 
 }
 \keyword{inference}

@@ -22,11 +22,12 @@ library(myfirstpackage)
 
 This package is a data analysis package including a few functions that can help the user better understand and interpret their data. my_t.test performs a simple t-test, my_lm creates a linear model, my_knn_cv makes a prediction of classification based on data, and my_rf_cv predicts object variables based on covariates. The following code will install the package from github:
 
-```{r, eval = FALSE}
+```{r, echo = FALSE}
 # install.packages("devtools")
-library(devtools)
+# library(devtools)
 # devtools::install_github("jacklorrengriffin/myfirstpackage")
 library(myfirstpackage)
+library(dplyr)
 ```
 
 
@@ -48,22 +49,24 @@ my_t.test(my_gapminder$lifeExp, "greater", 60)
 my_lm tutorial
 
 ```{r}
-my_lm(lifeExp ~ gdpPercap + continent, my_gapminder)
+my_lm(formula = lifeExp ~ gdpPercap + continent, data = my_gapminder)
 
 library(ggplot2)
 lm_output <- predict(lm(lifeExp ~ gdpPercap + continent, my_gapminder))
-comparison <- data.frame(my_gapminder[["lifeExp"]], lm_output)
+comparison <- data.frame("life_expectancy" = my_gapminder[["lifeExp"]], lm_output,
+                         "color" = my_gapminder[["continent"]])
 
-ggplot(data = comparison, aes(x = life_expectancy, y = lm_output))
+ggplot(data = comparison, aes(x = life_expectancy, y = lm_output, color = color)) + geom_point() + ylab("Fitted") + xlab("Actual")
 ```
 
 my_knn_cv tutorial
 
 ```{r}
 data(my_penguins)
+my_penguins <- na.omit(my_penguins)
 
-train <- na.omit(my_penguins)[,3:6]
-cl <- na.omit(my_penguins)[1]
+train <- my_penguins[,3:6]
+cl <- my_penguins %>% pull(species)
 
 k1 <- my_knn_cv(train, cl, 1, 5)
 k2 <- my_knn_cv(train, cl, 2, 5)
@@ -83,6 +86,9 @@ print(knn_results)
 my_rf_cv tutorial
 
 ```{r}
+data(my_penguins)
+my_penguins <- na.omit(my_penguins)
+
 cv_ests <- data.frame(rep(0, 90), rep(0, 90))
 colnames(cv_ests) <- c("k", "cv")
 
@@ -99,7 +105,7 @@ for (i in 61:90) {
     cv_ests[i, 2] <- my_rf_cv(10)
 }
 
-ggplot(data = cv_ests, aes(x = k, y = cv_est, group = k)) +
+ggplot(data = cv_ests, aes(x = k, y = cv, group = k)) +
   geom_boxplot() +
   labs(title = "k-Fold Cross-Validation Estimate") +
   theme_bw()

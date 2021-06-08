@@ -7,9 +7,9 @@
 my_lm(data, formula)
 }
 \arguments{
-\item{formula}{a formula class object}
+\item{data}{input data frame}
 
-\item{data:}{input data frame}
+\item{formula}{a formula class object}
 }
 \value{
 table with rows for each coefficient and columns for the estimate,

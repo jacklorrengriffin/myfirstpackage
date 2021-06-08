@@ -3,7 +3,7 @@
 #' This function fits a linear model in R
 #'
 #' @param formula a formula class object
-#' @param data: input data frame
+#' @param data input data frame
 #' @keywords inference
 #'
 #' @return table with rows for each coefficient and columns for the estimate,
@@ -24,7 +24,7 @@ my_lm <- function(data, formula) {
   B <- solve(t(x) %*% x) %*% t(x) %*% y
   df <- dim(data)[1] - length(B)
   sigma_sq <- sum((y - x %*% B) * (y - x %*% B) / df)
-  B_error <- diag(sqrt(sigma_sq * solve(t(x) %*% x)))
+  B_error <- sqrt(diag(sigma_sq * solve(t(x) %*% x)))
   t <- B / B_error
   p_values <- 2 * pt(abs(t), df, lower.tail = FALSE)
   result <- data.frame("coefficients" = B,
