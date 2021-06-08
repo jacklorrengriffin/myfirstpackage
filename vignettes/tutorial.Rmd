@@ -19,3 +19,63 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(myfirstpackage)
 ```
+
+This package is a data analysis package including a few functions that can help the user better understand and interpret their data. my_t.test performs a simple t-test, my_lm creates a linear model, my_knn_cv makes a prediction of classification based on data, and my_rf_cv predicts object variables based on covariates. The following code will install the package from github:
+
+```{r, eval = FALSE}
+# install.packages("devtools")
+library(devtools)
+# devtools::install_github("jacklorrengriffin/myfirstpackage")
+library(myfirstpackage)
+```
+
+
+load gapminder data for tutorials
+```{r}
+data(my_gapminder)
+```
+
+my_t.test tutorial
+
+```{r}
+my_t.test(my_gapminder$lifeExp, "two.sided", 60)
+my_t.test(my_gapminder$lifeExp, "less", 60)
+my_t.test(my_gapminder$lifeExp, "greater", 60)
+```
+
+my_lm tutorial
+
+```{r}
+my_lm(lifeExp ~ gdpPercap + continent, my_gapminder)
+
+library(ggplot2)
+lm_output <- predict(lm(lifeExp ~ gdpPercap + continent, my_gapminder))
+comparison <- data.frame(my_gapminder[["lifeExp"]], lm_output)
+
+ggplot(data = comparison, aes(x = life_expectancy, y = lm_output))
+```
+
+my_knn_cv tutorial
+
+```{r}
+train <- na.omit(my_penguins)[,3:6]
+cl <- na.omit(my_penguins)[1]
+
+k1 <- my_knn_cv(train, cl, 1, 5)
+k2 <- my_knn_cv(train, cl, 2, 5)
+k3 <- my_knn_cv(train, cl, 3, 5)
+k4 <- my_knn_cv(train, cl, 4, 5)
+k5 <- my_knn_cv(train, cl, 5, 5)
+k6 <- my_knn_cv(train, cl, 6, 5)
+k7 <- my_knn_cv(train, cl, 7, 5)
+k8 <- my_knn_cv(train, cl, 8, 5)
+k9 <- my_knn_cv(train, cl, 9, 5)
+k10 <- my_knn_cv(train, cl, 10, 5)
+knn_vect <- c(k1, k2, k3, k4, k5, k6, k7, k8, k9, k10)
+```
+
+my_rf_cv tutorial
+
+```{r}
+
+```
