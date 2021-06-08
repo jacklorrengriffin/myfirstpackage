@@ -43,8 +43,7 @@ my_t.test(my_gapminder$lifeExp, "two.sided", 60)
 my_t.test(my_gapminder$lifeExp, "less", 60)
 my_t.test(my_gapminder$lifeExp, "greater", 60)
 ```
-
-
+The above figures are the results for our t tests. At a p value cut off of 0.05, both our two sided test and our greater than test fail, with results greater than 0.05. The less than test returns a value of 0.047, which means that our results are significant at this cutoff. Therefore, we can conclude that the data rejects the null hypothesis and supports the alternative hypothesis, suggesting that the mean life expectancy is less than 60.
 
 my_lm tutorial
 
@@ -58,6 +57,15 @@ comparison <- data.frame("life_expectancy" = my_gapminder[["lifeExp"]], lm_outpu
 
 ggplot(data = comparison, aes(x = life_expectancy, y = lm_output, color = color)) + geom_point() + ylab("Fitted") + xlab("Actual")
 ```
+Using my_lm, we demonstrate a regression using life expectancy as our response variable and gdp per capita and continent as our explanatory variables. Our gdp per capita coefficient is 4.45e-04, meaning that when gdp per capita increases by 1, life expectancy increases by about .0004 years. 
+
+Hypothesis test for gdp per capita and life expectancy:
+HO: GDP per capita has no significant correlation with life expectancy
+HA: The relationship between GDP per capita and life expectancy is statistically significant.
+
+Using a level of 0.05, we can easily reject the null hypothesis for gdp per capita, as the p value is extremely small, suggesting that the data is statistically significant.
+
+The figure we created showing the difference between the actual life expectancy and that predicted based on our model is also shown above. There is much less variability in the actual data than there is in our fitted model, likely because our model is overvaluing the only data we have given it, leading to too extreme of rpedictions.
 
 my_knn_cv tutorial
 
@@ -82,6 +90,8 @@ knn_results <- c(k1, k2, k3, k4, k5, k6, k7, k8, k9, k10)
 
 print(knn_results)
 ```
+
+ased on the training misclassification rates I would chose k=1, but based on the cv misclassification rates I would chose k=10. This makes sense because k=1 is likely overfit to the data, making it extremely accurate, but not as generalizable. As a result, I would choose knn = 10 in practice. This is a good demonstration of why cross fold validation is useful. By splitting the data into folds and using each one as training and the others as tests, it avoids overfitting to a specific data set and minimizes mean squared error.
 
 my_rf_cv tutorial
 
@@ -122,3 +132,5 @@ rownames(table) <- c("k = 2", "k = 5", "k = 10")
 colnames(table) <- c("Mean", "SD")
 as.table(table)
 ```
+
+Our final tutorial is for my_rf_cv. We predict body mass using bill length, bill depth, and flipper length using k = 2, 5, and 10. The box plots clearly show that as the number of folds increases, the standard deviation decrasesand and mean both decrease. This is likely because the more folds we include, the more accurate the predicitons become and the less likely they are to overfit.
