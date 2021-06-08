@@ -43,6 +43,8 @@ my_t.test(my_gapminder$lifeExp, "less", 60)
 my_t.test(my_gapminder$lifeExp, "greater", 60)
 ```
 
+
+
 my_lm tutorial
 
 ```{r}
@@ -58,6 +60,8 @@ ggplot(data = comparison, aes(x = life_expectancy, y = lm_output))
 my_knn_cv tutorial
 
 ```{r}
+data(my_penguins)
+
 train <- na.omit(my_penguins)[,3:6]
 cl <- na.omit(my_penguins)[1]
 
@@ -71,11 +75,44 @@ k7 <- my_knn_cv(train, cl, 7, 5)
 k8 <- my_knn_cv(train, cl, 8, 5)
 k9 <- my_knn_cv(train, cl, 9, 5)
 k10 <- my_knn_cv(train, cl, 10, 5)
-knn_vect <- c(k1, k2, k3, k4, k5, k6, k7, k8, k9, k10)
+knn_results <- c(k1, k2, k3, k4, k5, k6, k7, k8, k9, k10)
+
+print(knn_results)
 ```
 
 my_rf_cv tutorial
 
 ```{r}
+cv_ests <- data.frame(rep(0, 90), rep(0, 90))
+colnames(cv_ests) <- c("k", "cv")
 
+for (i in 1:30) {
+    cv_ests[i, 1] <- "2"
+    cv_ests[i, 2] <- my_rf_cv(2)
+}
+for (i in 31:60) {
+    cv_ests[i, 1] <- "5"
+    cv_ests[i, 2] <- my_rf_cv(5)
+}
+for (i in 61:90) {
+    cv_ests[i, 1] <- "10"
+    cv_ests[i, 2] <- my_rf_cv(10)
+}
+
+ggplot(data = cv_ests, aes(x = k, y = cv_est, group = k)) +
+  geom_boxplot() +
+  labs(title = "k-Fold Cross-Validation Estimate") +
+  theme_bw()
+
+data_2 <- c(mean(cv_ests[which(cv_ests$k == "2"), ]$cv),
+            sd(cv_ests[which(cv_ests$k == "2"), ]$cv))
+data_5 <- c(mean(cv_ests[which(cv_ests$k == "5"), ]$cv),
+            sd(cv_ests[which(cv_ests$k == "5"), ]$cv))
+data_10 <- c(mean(cv_ests[which(cv_ests$k == "10"), ]$cv),
+            sd(cv_ests[which(cv_ests$k == "10"), ]$cv))
+
+table <- matrix(c(data_2, data_5, data_10), nrow = 3, ncol = 2, byrow = TRUE)
+rownames(table) <- c("k = 2", "k = 5", "k = 10")
+colnames(table) <- c("Mean", "SD")
+as.table(table)
 ```

@@ -13,7 +13,7 @@
 #' and a numberic with the cross-validation and misclassification error
 #'
 #' @examples
-#' my_knn_cvv(mypenguins, mypenguins$species)
+#' my_knn_cvv(my_penguins, my_penguins$species)
 #' my_knn_cvv(data, daya$x)
 #'
 #' @export
